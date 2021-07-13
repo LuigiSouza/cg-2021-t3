@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# CodeBlocks
+__bin
+__obj
+canvas.layout
+canvas.depend
