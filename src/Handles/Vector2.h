@@ -1,6 +1,8 @@
 #ifndef __VECTOR_2_H__
 #define __VECTOR_2_H__
 
+#include <cmath>
+
 class Vector2
 {
 public:
@@ -15,6 +17,12 @@ public:
     {
         x = _x;
         y = _y;
+    }
+
+    Vector2(const Vector2 &vec)
+    {
+        x = vec.x;
+        y = vec.y;
     }
 
     void set(float _x, float _y)
@@ -35,7 +43,6 @@ public:
 
         if (norm == 0.0)
         {
-            printf("\n\nNormalize::Divisao por zero");
             x = 1;
             y = 1;
             return;
@@ -59,6 +66,12 @@ public:
     Vector2 operator*(const Vector2 &v)
     {
         Vector2 aux(x * v.x, y * v.y);
+        return (aux);
+    }
+
+    Vector2 operator/(const Vector2 &v)
+    {
+        Vector2 aux(x / v.x, y / v.y);
         return (aux);
     }
 
