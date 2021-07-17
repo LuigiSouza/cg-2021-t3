@@ -46,18 +46,21 @@
 
 #include "gl_canvas2d.h"
 
-#include "Handles/HandleMouse.hpp"
-#include "Handles/Point.hpp"
+#include "Entities/Dart.h"
 
-#include "Panel/Panel.hpp"
+#include "Handles/HandleMouse.h"
+#include "Handles/Point.h"
+
+#include "Panel/Panel.h"
 
 #define PI_div_4 0.785398163397
 #define PI_div_2 1.570796326795
 
 int screenWidth = 1024, screenHeight = 768;
 Mouse *mouse_state;
+Dart *dart;
 
-double gravity = 50.0;
+double gravity = 30.0;
 
 // Variable to keep chosen figure when clicking a panel option
 bool click = false;
@@ -91,9 +94,8 @@ Vector2 quadratic_bezier(Vector2 p0, Vector2 p1, Vector2 p2, double t)
 double quadratic_bhaskara(double a, double b, double c)
 {
    double discriminant = b * b - 4 * a * c;
-   double x1 = (-b + sqrt(discriminant)) / (2 * a);
    double x2 = (-b - sqrt(discriminant)) / (2 * a);
-   return x1 > 0 ? x1 : x2;
+   return x2;
 }
 
 /***********************************************************
@@ -131,32 +133,26 @@ void render()
 {
    CV::clear(0, 0, 0);
 
-   double mousex = mouse_state->getX();
-   double mousey = mouse_state->getY();
+   dart->update(*mouse_state);
+   dart->render();
 
-   Vector2 p0 = Vector2(200, 400);
+   // Vector2 q1 = quadratic_bezier(p0, p1, p2, t);
+   // Vector2 q2;
+   // t += 0.005;
+   // if (t > 1)
+   // {
+   //    q2 = quadratic_bezier(p0, p1, p2, t - 0.015);
+   //    t = 0;
+   // }
+   // else
+   // {
+   //    q2 = quadratic_bezier(p0, p1, p2, t);
+   // }
+   // float dist_porojectile = Point::distance(q1.x, q1.y, q2.x, q2.y);
+   // float proportion = 30.0 / dist_porojectile;
+   // q1 = (q1 - q2) * proportion + q2;
 
-   double dist = Point::distance(mousex, mousey, p0.x, p0.y);
-
-   double lim_radius = 150;
-   double max_mul = std::min(dist, lim_radius);
-
-   Vector2 p1 = Vector2(((mousex - p0.x) / (dist)) * max_mul + p0.x, ((mousey - p0.y) / (dist)) * max_mul + p0.y);
-
-   double time = quadratic_bhaskara(-(0.5 * gravity), (p1.y - p0.y), p0.y);
-   std::cout << " p " << p1.x << " time " << time << std::endl;
-   Vector2 p2 = Vector2(p0.x + ((p1.x - p0.x) * time), 0);
-
-   p1 = ((p1 - p0) * 4) + p0;
-
-   CV::circleFill(p0.x, p0.y, 2, 10);
-   CV::circleFill(p1.x, p1.y, 2, 10);
-   CV::circleFill(p2.x, p2.y, 2, 10);
-
-   t += 0.01;
-   t = t > 1 ? 0 : t;
-   Vector2 q0 = quadratic_bezier(p0, p1, p2, t);
-   CV::circleFill(q0.x, q0.y, 5, 10);
+   // CV::line(q1.x, q1.y, q2.x, q2.y);
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
@@ -227,9 +223,10 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
 int main(void)
 {
-   CV::init(&screenWidth, &screenHeight, "Teste trabalho 1");
+   CV::init(&screenWidth, &screenHeight, "More Bloons");
 
    mouse_state = new Mouse();
+   dart = new Dart(200, 350);
 
    CV::run();
 }
