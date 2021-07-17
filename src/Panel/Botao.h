@@ -2,7 +2,7 @@
 #define __BOTAO_H__
 
 #include "../gl_canvas2d.h"
-#include "../Handles/HandleMouse.hpp"
+#include "../Handles/HandleMouse.h"
 #include "../Handles/Vector2.h"
 
 #include <string>

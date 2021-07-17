@@ -1,7 +1,7 @@
 #ifndef __PANEL_H__
 #define __PANEL_H__
 
-#include "Botao.hpp"
+#include "Botao.h"
 #include <list>
 
 class Panel

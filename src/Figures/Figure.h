@@ -3,7 +3,7 @@
 #define __FIGURE_H__
 
 #include "../gl_canvas2d.h"
-#include "../Handles/Point.hpp"
+#include "../Handles/Point.h"
 #include "../Handles/Vector2.h"
 class Figure
 {
