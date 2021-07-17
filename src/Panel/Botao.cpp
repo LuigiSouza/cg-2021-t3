@@ -1,4 +1,4 @@
-#include "Botao.hpp"
+#include "Botao.h"
 
 Botao::Botao(float _x, float _y, float _larg, float _alt, int function, int *rgb)
 {

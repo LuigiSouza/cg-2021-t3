@@ -44,20 +44,21 @@
 			<Add library="lib/freeglut.lib" />
 		</Linker>
 		<Unit filename="include/GL/glut.h" />
+		<Unit filename="src/Entities/Dart.cpp" />
 		<Unit filename="src/Figures/Circle_figure.h" />
 		<Unit filename="src/Figures/Figure.h" />
 		<Unit filename="src/Figures/Polygon_figure.h" />
 		<Unit filename="src/Figures/Square_figure.h" />
 		<Unit filename="src/Figures/Triangle_figure.h" />
 		<Unit filename="src/Handles/HandleMouse.cpp" />
-		<Unit filename="src/Handles/HandleMouse.hpp" />
+		<Unit filename="src/Handles/HandleMouse.h" />
 		<Unit filename="src/Handles/Point.cpp" />
-		<Unit filename="src/Handles/Point.hpp" />
+		<Unit filename="src/Handles/Point.h" />
 		<Unit filename="src/Handles/Vector2.h" />
 		<Unit filename="src/Panel/Botao.cpp" />
-		<Unit filename="src/Panel/Botao.hpp" />
+		<Unit filename="src/Panel/Botao.h" />
 		<Unit filename="src/Panel/Panel.cpp" />
-		<Unit filename="src/Panel/Panel.hpp" />
+		<Unit filename="src/Panel/Panel.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />

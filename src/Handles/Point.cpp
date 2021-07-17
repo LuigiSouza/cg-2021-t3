@@ -1,5 +1,5 @@
 
-#include "Point.hpp"
+#include "Point.h"
 
 Vector2 Point::perpendicular(Vector2 vec1, Vector2 vec2, float px, float py)
 {
@@ -45,4 +45,14 @@ bool Point::isInside(float x, float y, int n, float vx[], float vy[])
 float Point::distance(float x1, float y1, float x2, float y2)
 {
    return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) * 1.0);
+}
+
+float Point::map(float n, float start1, float stop1, float start2, float stop2)
+{
+   return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
+}
+
+Vector2 Point::quadratic_bezier(Vector2 p0, Vector2 p1, Vector2 p2, double t)
+{
+   return p0 * ((1 - t) * (1 - t)) + p1 * (2 * (1 - t) * t) + p2 * t * t;
 }

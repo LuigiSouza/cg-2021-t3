@@ -1,5 +1,5 @@
 
-#include "HandleMouse.hpp"
+#include "HandleMouse.h"
 
 Mouse::Mouse(void)
 {
