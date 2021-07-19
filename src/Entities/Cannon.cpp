@@ -1,10 +1,5 @@
 #include "Cannon.h"
 
-Cannon::Cannon(Vector2 _p0) : dart(_p0)
-{
-    this->pos = Vector2(_p0);
-}
-
 Cannon::Cannon(float _x, float _y) : dart(_x, _y)
 {
     this->pos = Vector2(_x, _y);
@@ -29,16 +24,20 @@ void Cannon::update(Mouse mouse)
 
 void Cannon::render()
 {
+    CV::color(1, 1, 1);
     CV::circleFill(pos.x, pos.y, size, 10);
     if (state == CannonState::Drag)
         dart.render_path();
     if (state == CannonState::Shoot)
         dart.render_dart();
+    CV::color(0, 0, 0);
 }
 
 void Cannon::shotDart()
 {
-    if (state != CannonState::Drag || this->dart.getForce() < this->minimum_force)
+    if (state != CannonState::Drag)
+        return;
+    if (this->dart.getForce() < this->minimum_force)
     {
         state = CannonState::Stop;
         return;
@@ -49,10 +48,9 @@ void Cannon::shotDart()
 
 void Cannon::dragCannon(Mouse mouse)
 {
-    if (state != CannonState::Shoot && Point::distance(mouse.getX(), mouse.getY(), pos.x, pos.y) < size)
+    if (state != CannonState::Shoot && Algebra::distance(mouse.getX(), mouse.getY(), pos.x, pos.y) < size)
     {
         state = CannonState::Drag;
-        std::cout << "drag " << std::endl;
     }
 }
 

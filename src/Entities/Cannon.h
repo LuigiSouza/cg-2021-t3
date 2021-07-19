@@ -22,7 +22,6 @@ public:
     void render();
     void update(Mouse mouse);
 
-    Cannon(Vector2 _p0);
     Cannon(float _x, float _y);
     ~Cannon();
 };
