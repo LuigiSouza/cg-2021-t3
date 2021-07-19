@@ -60,6 +60,19 @@ Mouse *mouse_state;
 Cannon *cannon;
 std::list<Balloon *> balloons;
 
+bool balloons_grid[10][10] = {
+    {0, 0, 0, 1, 1, 1, 1, 0, 0, 0},
+    {0, 0, 1, 1, 1, 1, 1, 1, 0, 0},
+    {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+    {0, 0, 1, 1, 1, 1, 1, 1, 0, 0},
+    {0, 0, 0, 1, 1, 1, 1, 0, 0, 0},
+};
+
 // Variable to keep chosen figure when clicking a panel option
 bool click = false;
 
@@ -86,6 +99,14 @@ void high_light()
 void dispose()
 {
    delete mouse_state;
+   delete cannon;
+   for (auto it = balloons.begin(); it != balloons.end(); ++it)
+   {
+      Balloon *aux = *it;
+      balloons.erase(it);
+      delete aux;
+   }
+   balloons.clear();
 }
 
 /***********************************************************
@@ -196,7 +217,9 @@ int main(void)
    for (int i = 0; i < 10; i++)
       for (int j = 0; j < 10; j++)
       {
-         Balloon *balloon = new Balloon(300 + i * 50, 50 + j * 80);
+         if (balloons_grid[i][j] == 0)
+            continue;
+         Balloon *balloon = new Balloon(350 + (10 * 2 * Balloon::getSize()) - (j * 2 * Balloon::getSize()), 200 + (10 * 2 * Balloon::getSize()) - (i * 2 * Balloon::getSize()));
          balloon->set_random_color((i + 5) * (j + 1));
          balloons.push_back(balloon);
       }
