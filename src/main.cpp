@@ -47,6 +47,7 @@
 #include "gl_canvas2d.h"
 
 #include "Entities/Dart.h"
+#include "Entities/Cannon.h"
 
 #include "Handles/HandleMouse.h"
 #include "Handles/Point.h"
@@ -58,7 +59,7 @@
 
 int screenWidth = 1024, screenHeight = 768;
 Mouse *mouse_state;
-Dart *dart;
+Cannon *cannon;
 
 double gravity = 30.0;
 
@@ -86,18 +87,6 @@ void high_light()
 {
 }
 
-Vector2 quadratic_bezier(Vector2 p0, Vector2 p1, Vector2 p2, double t)
-{
-   return p0 * ((1 - t) * (1 - t)) + p1 * (2 * (1 - t) * t) + p2 * t * t;
-}
-
-double quadratic_bhaskara(double a, double b, double c)
-{
-   double discriminant = b * b - 4 * a * c;
-   double x2 = (-b - sqrt(discriminant)) / (2 * a);
-   return x2;
-}
-
 /***********************************************************
 *
 * Load/Create Functions
@@ -117,6 +106,7 @@ void dispose()
 
 void update()
 {
+   cannon->update(*mouse_state);
 }
 
 double t = 0;
@@ -131,28 +121,11 @@ double t = 0;
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
 {
+   update();
+
    CV::clear(0, 0, 0);
 
-   dart->update(*mouse_state);
-   dart->render();
-
-   // Vector2 q1 = quadratic_bezier(p0, p1, p2, t);
-   // Vector2 q2;
-   // t += 0.005;
-   // if (t > 1)
-   // {
-   //    q2 = quadratic_bezier(p0, p1, p2, t - 0.015);
-   //    t = 0;
-   // }
-   // else
-   // {
-   //    q2 = quadratic_bezier(p0, p1, p2, t);
-   // }
-   // float dist_porojectile = Point::distance(q1.x, q1.y, q2.x, q2.y);
-   // float proportion = 30.0 / dist_porojectile;
-   // q1 = (q1 - q2) * proportion + q2;
-
-   // CV::line(q1.x, q1.y, q2.x, q2.y);
+   cannon->render();
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
@@ -205,18 +178,18 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
    mouse_state->setX(x);
    mouse_state->setY(y);
 
-   update();
-
    // Left click
    if (button == 0)
    {
       // Release
       if (state == 1)
       {
+         cannon->shotDart();
       }
       // Push
       else if (state == 0)
       {
+         cannon->dragCannon(*mouse_state);
       }
    }
 }
@@ -226,7 +199,7 @@ int main(void)
    CV::init(&screenWidth, &screenHeight, "More Bloons");
 
    mouse_state = new Mouse();
-   dart = new Dart(200, 350);
+   cannon = new Cannon(200, 350);
 
    CV::run();
 }

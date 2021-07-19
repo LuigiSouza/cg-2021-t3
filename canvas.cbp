@@ -43,13 +43,12 @@
 			<Add library="lib/libopengl32.a" />
 			<Add library="lib/freeglut.lib" />
 		</Linker>
-		<Unit filename="include/GL/glut.h" />
+		<Unit filename="src/Entities/Balloon.h" />
+		<Unit filename="src/Entities/Cannon.cpp" />
+		<Unit filename="src/Entities/Cannon.h" />
 		<Unit filename="src/Entities/Dart.cpp" />
-		<Unit filename="src/Figures/Circle_figure.h" />
+		<Unit filename="src/Entities/Dart.h" />
 		<Unit filename="src/Figures/Figure.h" />
-		<Unit filename="src/Figures/Polygon_figure.h" />
-		<Unit filename="src/Figures/Square_figure.h" />
-		<Unit filename="src/Figures/Triangle_figure.h" />
 		<Unit filename="src/Handles/HandleMouse.cpp" />
 		<Unit filename="src/Handles/HandleMouse.h" />
 		<Unit filename="src/Handles/Point.cpp" />
