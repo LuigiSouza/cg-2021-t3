@@ -55,9 +55,6 @@
 
 #include "Panel/Panel.h"
 
-#define PI_div_4 0.785398163397
-#define PI_div_2 1.570796326795
-
 int screenWidth = 1024, screenHeight = 768;
 Mouse *mouse_state;
 Cannon *cannon;
@@ -71,10 +68,6 @@ bool click = false;
 * Render Functions
 *
 ************************************************************/
-
-void render_cursor_polygon()
-{
-}
 
 void render_figures()
 {
@@ -104,6 +97,8 @@ void dispose()
 void update()
 {
    cannon->update(*mouse_state);
+   for (auto it = balloons.begin(); it != balloons.end(); ++it)
+      (*it)->update(cannon->getDartArrow());
 }
 
 /***********************************************************
@@ -201,7 +196,7 @@ int main(void)
    for (int i = 0; i < 10; i++)
       for (int j = 0; j < 10; j++)
       {
-         Balloon *balloon = new Balloon(350 + i * 30, 350 + j * 30);
+         Balloon *balloon = new Balloon(300 + i * 50, 50 + j * 80);
          balloon->set_random_color((i + 5) * (j + 1));
          balloons.push_back(balloon);
       }

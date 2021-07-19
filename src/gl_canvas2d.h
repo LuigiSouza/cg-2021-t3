@@ -29,6 +29,9 @@
 #define SML_CIRCLE_DIV 10
 #define RADIUS_BALL 5
 
+#define PI_div_4 0.785398163397
+#define PI_div_2 1.570796326795
+
 #define BASE_SIZE 100
 
 #define Y_CANVAS_CRESCE_PARA_CIMA 1
