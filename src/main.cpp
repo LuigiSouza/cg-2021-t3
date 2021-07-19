@@ -48,9 +48,10 @@
 
 #include "Entities/Dart.h"
 #include "Entities/Cannon.h"
+#include "Entities/Balloon.h"
 
 #include "Handles/HandleMouse.h"
-#include "Handles/Point.h"
+#include "Handles/Algebra.h"
 
 #include "Panel/Panel.h"
 
@@ -60,14 +61,10 @@
 int screenWidth = 1024, screenHeight = 768;
 Mouse *mouse_state;
 Cannon *cannon;
-
-double gravity = 30.0;
+std::list<Balloon *> balloons;
 
 // Variable to keep chosen figure when clicking a panel option
 bool click = false;
-
-// Variable to track new figure
-float new_fig_r = 0, new_fig_g = 1, new_fig_b = 0;
 
 /***********************************************************
 *
@@ -109,8 +106,6 @@ void update()
    cannon->update(*mouse_state);
 }
 
-double t = 0;
-
 /***********************************************************
 *
 * Canvas Functions
@@ -121,11 +116,14 @@ double t = 0;
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
 {
-   update();
-
    CV::clear(0, 0, 0);
 
+   update();
+
    cannon->render();
+
+   for (auto it = balloons.begin(); it != balloons.end(); ++it)
+      (*it)->render();
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
@@ -200,6 +198,13 @@ int main(void)
 
    mouse_state = new Mouse();
    cannon = new Cannon(200, 350);
+   for (int i = 0; i < 10; i++)
+      for (int j = 0; j < 10; j++)
+      {
+         Balloon *balloon = new Balloon(350 + i * 30, 350 + j * 30);
+         balloon->set_random_color((i + 5) * (j + 1));
+         balloons.push_back(balloon);
+      }
 
    CV::run();
 }

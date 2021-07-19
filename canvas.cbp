@@ -51,8 +51,8 @@
 		<Unit filename="src/Figures/Figure.h" />
 		<Unit filename="src/Handles/HandleMouse.cpp" />
 		<Unit filename="src/Handles/HandleMouse.h" />
-		<Unit filename="src/Handles/Point.cpp" />
-		<Unit filename="src/Handles/Point.h" />
+		<Unit filename="src/Handles/Algebra.cpp" />
+		<Unit filename="src/Handles/Algebra.h" />
 		<Unit filename="src/Handles/Vector2.h" />
 		<Unit filename="src/Panel/Botao.cpp" />
 		<Unit filename="src/Panel/Botao.h" />
