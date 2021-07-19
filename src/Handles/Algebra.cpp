@@ -1,7 +1,7 @@
 
-#include "Point.h"
+#include "Algebra.h"
 
-Vector2 Point::perpendicular(Vector2 vec1, Vector2 vec2, float px, float py)
+Vector2 Algebra::perpendicular(Vector2 vec1, Vector2 vec2, float px, float py)
 {
    float k = ((vec2.y - vec1.y) * (px - vec1.x) - (vec2.x - vec1.x) * (py - vec1.y)) / ((vec2.y - vec1.y) * (vec2.y - vec1.y) + (vec2.x - vec1.x) * (vec2.x - vec1.x) * 1.0);
 
@@ -9,13 +9,13 @@ Vector2 Point::perpendicular(Vector2 vec1, Vector2 vec2, float px, float py)
                   py + k * (vec2.x - vec1.x) * 1.0);
 }
 
-Vector2 Point::rotate(float x, float y, float angle)
+Vector2 Algebra::rotate(float x, float y, float angle)
 {
    return Vector2(x * cos(angle) - y * sin(angle),
                   x * sin(angle) + y * cos(angle));
 }
 
-float Point::getAngle(float x1, float y1, float base_x, float base_y)
+float Algebra::getAngle(float x1, float y1, float base_x, float base_y)
 {
    float vectorB_x = x1 - base_x;
    float vectorB_y = y1 - base_y;
@@ -29,7 +29,7 @@ float Point::getAngle(float x1, float y1, float base_x, float base_y)
     * W. Randolph Franklin (WRF)
     * From: https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html
    */
-bool Point::isInside(float x, float y, int n, float vx[], float vy[])
+bool Algebra::isInside(float x, float y, int n, float vx[], float vy[])
 {
    bool c = false;
    for (int i = 0, j = n - 1; i < n; j = i++)
@@ -42,17 +42,17 @@ bool Point::isInside(float x, float y, int n, float vx[], float vy[])
    return c;
 }
 
-float Point::distance(float x1, float y1, float x2, float y2)
+float Algebra::distance(float x1, float y1, float x2, float y2)
 {
    return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) * 1.0);
 }
 
-float Point::map(float n, float start1, float stop1, float start2, float stop2)
+float Algebra::map(float n, float start1, float stop1, float start2, float stop2)
 {
    return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
 }
 
-Vector2 Point::quadratic_bezier(Vector2 p0, Vector2 p1, Vector2 p2, double t)
+Vector2 Algebra::quadratic_bezier(Vector2 p0, Vector2 p1, Vector2 p2, double t)
 {
    return p0 * ((1 - t) * (1 - t)) + p1 * (2 * (1 - t) * t) + p2 * t * t;
 }
