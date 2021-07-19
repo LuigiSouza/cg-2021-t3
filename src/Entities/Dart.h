@@ -3,7 +3,7 @@
 
 #include "../Handles/HandleMouse.h"
 #include "../Handles/Vector2.h"
-#include "../Handles/Point.h"
+#include "../Handles/Algebra.h"
 
 #include "../gl_canvas2d.h"
 
@@ -15,6 +15,7 @@ private:
 
     float force = 1.0;
     float t = 0.0;
+    float sum_t = 0.005;
 
     bool it_fell;
 
@@ -24,25 +25,25 @@ private:
 
     Vector2 scalePoint(Mouse mouse, float scale);
     Vector2 getPointP1(Mouse mouse);
-    Vector2 getPointP2();
+    Vector2 getPointP2(void);
 
 public:
     Dart(Vector2 _p0);
     Dart(float _x, float _y);
     ~Dart();
 
-    void reset_dart();
+    void reset_dart(void);
 
     void update_points(Mouse mouse);
-    void update_dart();
+    void update_dart(void);
 
-    void render();
-    void render_dart();
-    void render_path();
+    void render(void);
+    void render_dart(void);
+    void render_path(void);
 
-    bool hitGround();
-    Vector2 getPos();
-    float getForce();
+    bool hitGround(void);
+    Vector2 getPos(void);
+    float getForce(void);
 };
 
 #endif

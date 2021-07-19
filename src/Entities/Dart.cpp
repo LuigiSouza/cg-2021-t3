@@ -4,12 +4,12 @@ Vector2 Dart::getPointP1(Mouse mouse)
 {
     float mousex = mouse.getX();
     float mousey = mouse.getY();
-    this->force = Point::distance(mousex, mousey, p0.x, p0.y);
+    this->force = Algebra::distance(mousex, mousey, p0.x, p0.y);
     float max_mul = -std::min(this->force, max_force);
     return Vector2(((mousex - p0.x) / (this->force)) * max_mul + p0.x, ((mousey - p0.y) / (this->force)) * max_mul + p0.y);
 }
 
-Vector2 Dart::getPointP2()
+Vector2 Dart::getPointP2(void)
 {
     float a = -(0.5 * gravity);
     float b = (p1.y - p0.y);
@@ -23,10 +23,12 @@ Vector2 Dart::getPointP2()
 
 Vector2 Dart::scalePoint(Mouse mouse, float scale)
 {
-    return ((p1 - p0) * (Point::map(((mouse.getY() - p0.y) / (this->force)) * -1, -1, 1, 1, scale))) + p0;
+    double sin = ((mouse.getY() - p0.y) / (this->force)) * -1;
+    this->sum_t = 0.0125 - (sin * 0.0075);
+    return ((p1 - p0) * (Algebra::map(sin, -1, 1, 1, scale))) + p0;
 }
 
-void Dart::reset_dart()
+void Dart::reset_dart(void)
 {
     it_fell = false;
     t = 0;
@@ -40,16 +42,17 @@ void Dart::update_points(Mouse mouse)
     p1 = scalePoint(mouse, 6);
 }
 
-void Dart::update_dart()
+void Dart::update_dart(void)
 {
     if (it_fell)
         return;
 
     prevPos = pos;
-    t += 0.005;
+    t += sum_t;
     if (t <= 1)
     {
-        pos = Point::quadratic_bezier(p0, p1, p2, t);
+        pos = Algebra::quadratic_bezier(p0, p1, p2, t);
+        it_fell = (prevPos.x < 0 || prevPos.y < 0);
     }
     else
     {
@@ -57,7 +60,7 @@ void Dart::update_dart()
     }
 }
 
-void Dart::render()
+void Dart::render(void)
 {
     CV::circleFill(p0.x, p0.y, 2, 10);
     CV::circleFill(p1.x, p1.y, 2, 10);
@@ -65,36 +68,36 @@ void Dart::render()
     render_path();
 }
 
-void Dart::render_path()
+void Dart::render_path(void)
 {
     for (double i = 0; i <= 1; i += 0.1)
     {
-        Vector2 q0 = Point::quadratic_bezier(p0, p1, p2, i);
+        Vector2 q0 = Algebra::quadratic_bezier(p0, p1, p2, i);
         CV::circleFill(q0.x, q0.y, 5, 10);
     }
-    pos = Point::quadratic_bezier(p0, p1, p2, t);
+    pos = Algebra::quadratic_bezier(p0, p1, p2, t);
 }
 
-void Dart::render_dart()
+void Dart::render_dart(void)
 {
-    float dist_porojectile = Point::distance(prevPos.x, prevPos.y, pos.x, pos.y);
+    float dist_porojectile = Algebra::distance(prevPos.x, prevPos.y, pos.x, pos.y);
     float proportion = dart_size / dist_porojectile;
     Vector2 render_dart = (prevPos - pos) * proportion + prevPos;
 
     CV::line(render_dart.x, render_dart.y, pos.x, pos.y);
 }
 
-bool Dart::hitGround()
+bool Dart::hitGround(void)
 {
     return it_fell;
 }
 
-Vector2 Dart::getPos()
+Vector2 Dart::getPos(void)
 {
     return Vector2(pos);
 }
 
-float Dart::getForce()
+float Dart::getForce(void)
 {
     return std::min(this->force, max_force);
 }
