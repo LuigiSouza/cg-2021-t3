@@ -22,6 +22,8 @@ public:
     void set_color(int index);
     void set_color(float _r, float _g, float _b);
 
+    static float getSize(void);
+
     void update(Vector2 *dart);
     void render(void);
 };

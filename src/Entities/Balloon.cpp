@@ -58,4 +58,9 @@ Balloon::~Balloon()
 {
 }
 
+float Balloon::getSize(void)
+{
+    return size;
+}
+
 float Balloon::size = 15.0;
