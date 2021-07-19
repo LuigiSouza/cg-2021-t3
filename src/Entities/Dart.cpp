@@ -53,6 +53,16 @@ void Dart::update_dart(void)
     {
         pos = Algebra::quadratic_bezier(p0, p1, p2, t);
         it_fell = (prevPos.x < 0 || prevPos.y < 0);
+
+        float dist_porojectile = Algebra::distance(prevPos.x, prevPos.y, pos.x, pos.y);
+        float proportion = dart_size / dist_porojectile;
+        prevPos = (prevPos - pos) * proportion + pos;
+
+        arrow[0] = pos;
+        Vector2 rotate = Algebra::rotate((pos.x - prevPos.x) / 2, (pos.y - prevPos.y) / 2, PI_div_4);
+        arrow[1] = prevPos + rotate;
+        rotate = Algebra::rotate((pos.x - prevPos.x) / 2, (pos.y - prevPos.y) / 2, -PI_div_4);
+        arrow[2] = prevPos + rotate;
     }
     else
     {
@@ -60,12 +70,11 @@ void Dart::update_dart(void)
     }
 }
 
-void Dart::render(void)
+void Dart::render_reference(void)
 {
     CV::circleFill(p0.x, p0.y, 2, 10);
     CV::circleFill(p1.x, p1.y, 2, 10);
     CV::circleFill(p2.x, p2.y, 2, 10);
-    render_path();
 }
 
 void Dart::render_path(void)
@@ -80,11 +89,18 @@ void Dart::render_path(void)
 
 void Dart::render_dart(void)
 {
-    float dist_porojectile = Algebra::distance(prevPos.x, prevPos.y, pos.x, pos.y);
-    float proportion = dart_size / dist_porojectile;
-    Vector2 render_dart = (prevPos - pos) * proportion + prevPos;
+    CV::line(prevPos.x, prevPos.y, pos.x, pos.y);
 
-    CV::line(render_dart.x, render_dart.y, pos.x, pos.y);
+    float arrow_x[3] = {
+        arrow[0].x,
+        arrow[1].x,
+        arrow[2].x};
+    float arrow_y[3] = {
+        arrow[0].y,
+        arrow[1].y,
+        arrow[2].y};
+
+    CV::polygonFill(arrow_x, arrow_y, 3);
 }
 
 bool Dart::hitGround(void)
@@ -95,6 +111,11 @@ bool Dart::hitGround(void)
 Vector2 Dart::getPos(void)
 {
     return Vector2(pos);
+}
+
+Vector2 *Dart::getArrow(void)
+{
+    return arrow;
 }
 
 float Dart::getForce(void)
