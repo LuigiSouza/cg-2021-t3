@@ -1,14 +1,25 @@
 #include "Balloon.h"
 
+void Balloon::update(Vector2 *dart)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        if (!was_pop && Algebra::distance(dart[i].x, dart[i].y, pos.x, pos.y) <= this->size)
+        {
+            was_pop = true;
+            return;
+        }
+    }
+}
+
 void Balloon::render(void)
 {
+    if (was_pop)
+        return;
+
     CV::color(this->r, this->g, this->b);
     CV::circleFill(pos.x, pos.y, this->size, 10);
     CV::color(0, 0, 0);
-}
-
-void Balloon::update(void)
-{
 }
 
 void Balloon::set_color(float _r, float _g, float _b)
@@ -47,4 +58,4 @@ Balloon::~Balloon()
 {
 }
 
-float Balloon::size = 10.0;
+float Balloon::size = 15.0;

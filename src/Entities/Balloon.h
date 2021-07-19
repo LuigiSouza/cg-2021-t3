@@ -2,6 +2,7 @@
 #define __BALLOON_H__
 
 #include "../Handles/Vector2.h"
+#include "../Handles/Algebra.h"
 #include "../gl_canvas2d.h"
 class Balloon
 {
@@ -21,8 +22,8 @@ public:
     void set_color(int index);
     void set_color(float _r, float _g, float _b);
 
+    void update(Vector2 *dart);
     void render(void);
-    void update(void);
 };
 
 #endif
