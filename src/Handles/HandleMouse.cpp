@@ -19,6 +19,8 @@ void Mouse::setY(float y)
 }
 float Mouse::getX(void) { return this->pos_x; }
 float Mouse::getY(void) { return this->pos_y; }
+float Mouse::getPrevX(void) { return this->prev_pos_x; }
+float Mouse::getPrevY(void) { return this->prev_pos_y; }
 float Mouse::moveX(void) { return this->pos_x - this->prev_pos_x; }
 float Mouse::moveY(void) { return this->pos_y - this->prev_pos_y; }
 

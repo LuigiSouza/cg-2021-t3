@@ -21,6 +21,8 @@ public:
     // getters
     float getX(void);
     float getY(void);
+    float getPrevX(void);
+    float getPrevY(void);
     // get move from ouse
     float moveX(void);
     float moveY(void);
