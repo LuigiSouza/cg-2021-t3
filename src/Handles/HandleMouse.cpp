@@ -3,8 +3,42 @@
 
 Mouse::Mouse(void)
 {
+   for (int i = 0; i < 3; i++)
+   {
+      prev_button[i] = false;
+      button[i] = false;
+   }
    this->prev_pos_x = this->pos_x = 0;
    this->prev_pos_y = this->pos_y = 0;
+}
+
+void Mouse::update(void)
+{
+   for (int i = 0; i < 3; i++)
+   {
+      this->prev_button[i] = this->button[i];
+   }
+}
+
+void Mouse::setPress(int index)
+{
+   this->prev_button[index] = this->button[index];
+   this->button[index] = !this->button[index];
+}
+
+bool Mouse::isDown(int index)
+{
+   return this->button[index];
+}
+
+bool Mouse::pushed(int index)
+{
+   return this->button[index] && !this->prev_button[index];
+}
+
+bool Mouse::released(int index)
+{
+   return !this->button[index] && this->prev_button[index];
 }
 
 void Mouse::setX(float x)
