@@ -10,6 +10,8 @@ private:
     Vector2 pos;
     Vector2 direction[3];
 
+    float r, g, b;
+
     CannonState state;
 
     Dart dart;

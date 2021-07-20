@@ -7,6 +7,9 @@ Cannon::Cannon(float _x, float _y) : dart(_x, _y)
     this->direction[1] = Vector2(pos.x - minimum_force / 2.0, pos.y + minimum_force);
     this->direction[2] = Vector2(pos.x + minimum_force / 2.0, pos.y + minimum_force);
     this->state = CannonState::Stop;
+    this->r = 1;
+    this->g = 0.5;
+    this->r = 0;
 }
 
 Cannon::~Cannon()
@@ -50,6 +53,12 @@ void Cannon::update(Mouse mouse)
 void Cannon::render(void)
 {
     CV::color(1, 1, 1);
+    if (state == CannonState::Drag)
+        dart.render_path();
+    if (state == CannonState::Shoot)
+        dart.render_dart();
+
+    CV::color(r, g, b);
     CV::circleFill(pos.x, pos.y, size, 10);
 
     float cannon_x[3] = {
@@ -62,10 +71,6 @@ void Cannon::render(void)
         direction[2].y};
     CV::polygonFill(cannon_x, cannon_y, 3);
 
-    if (state == CannonState::Drag)
-        dart.render_path();
-    if (state == CannonState::Shoot)
-        dart.render_dart();
     CV::color(0, 0, 0);
 }
 
