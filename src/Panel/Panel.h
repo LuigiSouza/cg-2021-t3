@@ -23,7 +23,7 @@ public:
    Panel(float x, float y, float width, float height);
    ~Panel();
 
-   void addButton(float _x, float _y, float _larg, float _alt, int function);
+   void addButton(float _x, float _y, float _larg, float _alt, EnumBotao , int rgb);
 
    bool insidePanel(Mouse mouse);
    Botao *buttonClicked(Mouse mouse);

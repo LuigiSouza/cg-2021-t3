@@ -5,6 +5,8 @@
 #include "../Handles/HandleMouse.h"
 #include "../Handles/Vector2.h"
 
+#include "EnumBotao.h"
+
 #include <string>
 #include <iostream>
 
@@ -16,19 +18,12 @@ private:
 
   float r, g, b;
 
-  float *vx;
-  float *vy;
   int elems;
 
-  char function;
-
-  bool isFigure;
-
-  // Sets functions of button
-  void set_function(int function, int *rgb);
+  EnumBotao function;
 
 public:
-  Botao(float _x, float _y, float _larg, float _alt, int function, int *rgb);
+  Botao(float _x, float _y, float _larg, float _alt, EnumBotao function, int rgb);
 
   void render();
 
@@ -44,10 +39,12 @@ public:
     return ret;
   }
   // Sets functions of button
-  char get_function()
+  EnumBotao get_function()
   {
     return this->function;
   }
+  // Sets functions of button
+  void set_function(EnumBotao function);
 
   void set_color(float r, float g, float b)
   {

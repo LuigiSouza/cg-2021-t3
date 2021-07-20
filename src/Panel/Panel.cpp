@@ -6,7 +6,6 @@ Panel::Panel(float x, float y, float width, float height)
    coord_y = y;
    this->width = width;
    this->height = height;
-   color_control = 0;
    r = g = b = 1;
 }
 
@@ -15,11 +14,11 @@ Panel::~Panel()
    buttons.clear();
 }
 
-void Panel::addButton(float _x, float _y, float _larg, float _alt, int function)
+void Panel::addButton(float _x, float _y, float _larg, float _alt, EnumBotao function, int rgb)
 {
    _x += coord_x;
    _y += coord_y;
-   buttons.push_front(new Botao(_x, _y, _larg, _alt, function, &color_control));
+   buttons.push_front(new Botao(_x, _y, _larg, _alt, function, rgb));
 }
 
 bool Panel::insidePanel(Mouse mouse)

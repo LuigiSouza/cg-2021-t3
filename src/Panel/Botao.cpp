@@ -1,15 +1,14 @@
 #include "Botao.h"
 
-Botao::Botao(float _x, float _y, float _larg, float _alt, int function, int *rgb)
+Botao::Botao(float _x, float _y, float _larg, float _alt, EnumBotao function, int rgb)
 {
    altura = _alt;
    largura = _larg;
    x = _x;
    y = _y;
-   r = b = 0;
-   g = 1;
    this->function = function;
-   set_function(function, rgb);
+   set_color(rgb);
+   set_function(function);
 }
 
 void Botao::render()
@@ -17,10 +16,7 @@ void Botao::render()
    CV::color(r, g, b);
    CV::rectFill(x, y, x + largura, y + altura);
    CV::color(0, 0, 0);
-   if (!isFigure)
-      CV::text(x + 5, y + altura / 2, label); //escreve o label do botao mais ou menos ao centro.
-   else
-      CV::polygon(vx, vy, elems);
+   CV::text(x + 5, y + altura / 2, label); //escreve o label do botao mais ou menos ao centro.
 }
 
 bool Botao::isInside(Mouse mouse_state)
@@ -32,12 +28,26 @@ bool Botao::isInside(Mouse mouse_state)
    return false;
 }
 
-void Botao::set_function(int function, int *rgb)
+void Botao::set_function(EnumBotao function)
 {
-   isFigure = false;
-   float ang, radius, inc;
-
-   std::string a;
-
-   isFigure = true;
+   switch (function)
+   {
+   case EnumBotao::Jogar:
+      sprintf(label, "Jogar");
+      this->function = function;
+      break;
+   case EnumBotao::Facil:
+      sprintf(label, "Facil");
+      this->function = function;
+      break;
+   case EnumBotao::Dificil:
+      sprintf(label, "Dificil");
+      this->function = function;
+      break;
+   default:
+      std::cout << std::endl
+                << "Opcao Invalida..." << std::endl;
+      exit(0);
+      break;
+   }
 }
