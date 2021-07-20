@@ -43,35 +43,24 @@
 #include <list>
 #include <iostream>
 #include <fstream>
+#include <map>
 
 #include "gl_canvas2d.h"
 
-#include "Entities/Dart.h"
 #include "Entities/Cannon.h"
 #include "Entities/Balloon.h"
 
 #include "Handles/HandleMouse.h"
 #include "Handles/Algebra.h"
 
-#include "Panel/Panel.h"
+#include "States/Game.h"
+#include "States/Menu.h"
 
 int screenWidth = 1024, screenHeight = 768;
-Mouse *mouse_state;
-Cannon *cannon;
-std::list<Balloon *> balloons;
 
-bool balloons_grid[10][10] = {
-    {0, 0, 0, 1, 1, 1, 1, 0, 0, 0},
-    {0, 0, 1, 1, 1, 1, 1, 1, 0, 0},
-    {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-    {0, 0, 1, 1, 1, 1, 1, 1, 0, 0},
-    {0, 0, 0, 1, 1, 1, 1, 0, 0, 0},
-};
+Mouse *mouse_state;
+std::map<std::string, GameState *> state;
+std::string current_state = "Menu";
 
 // Variable to keep chosen figure when clicking a panel option
 bool click = false;
@@ -99,14 +88,6 @@ void high_light()
 void dispose()
 {
    delete mouse_state;
-   delete cannon;
-   for (auto it = balloons.begin(); it != balloons.end(); ++it)
-   {
-      Balloon *aux = *it;
-      balloons.erase(it);
-      delete aux;
-   }
-   balloons.clear();
 }
 
 /***********************************************************
@@ -117,9 +98,8 @@ void dispose()
 
 void update()
 {
-   cannon->update(*mouse_state);
-   for (auto it = balloons.begin(); it != balloons.end(); ++it)
-      (*it)->update(cannon->getDartArrow());
+   state[current_state]->update(*mouse_state);
+   mouse_state->update();
 }
 
 /***********************************************************
@@ -134,12 +114,9 @@ void render()
 {
    CV::clear(0, 0, 0);
 
+   state[current_state]->render();
+
    update();
-
-   cannon->render();
-
-   for (auto it = balloons.begin(); it != balloons.end(); ++it)
-      (*it)->render();
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
@@ -187,10 +164,13 @@ void keyboardUp(int key)
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
-   // printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction, x, y);
+   printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction, x, y);
 
    mouse_state->setX(x);
    mouse_state->setY(y);
+
+   if (state != -2)
+      mouse_state->setPress(button);
 
    // Left click
    if (button == 0)
@@ -198,12 +178,10 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
       // Release
       if (state == 1)
       {
-         cannon->shotDart();
       }
       // Push
       else if (state == 0)
       {
-         cannon->dragCannon(*mouse_state);
       }
    }
 }
@@ -213,16 +191,8 @@ int main(void)
    CV::init(&screenWidth, &screenHeight, "More Bloons");
 
    mouse_state = new Mouse();
-   cannon = new Cannon(200, 350);
-   for (int i = 0; i < 10; i++)
-      for (int j = 0; j < 10; j++)
-      {
-         if (balloons_grid[i][j] == 0)
-            continue;
-         Balloon *balloon = new Balloon(350 + (10 * 2 * Balloon::getSize()) - (j * 2 * Balloon::getSize()), 200 + (10 * 2 * Balloon::getSize()) - (i * 2 * Balloon::getSize()));
-         balloon->set_random_color((i + 5) * (j + 1));
-         balloons.push_back(balloon);
-      }
+   state["Game"] = new Game(&screenWidth, &screenHeight);
+   state["Menu"] = new Menu(screenWidth / 4, 100, screenWidth / 2, 600);
 
    CV::run();
 }
