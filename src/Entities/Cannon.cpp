@@ -50,10 +50,10 @@ void Cannon::update(Mouse mouse)
         dart.update_dart();
 }
 
-void Cannon::render(void)
+void Cannon::render(bool show_path)
 {
     CV::color(1, 1, 1);
-    if (state == CannonState::Drag)
+    if (show_path && state == CannonState::Drag)
         dart.render_path();
     if (state == CannonState::Shoot)
         dart.render_dart();

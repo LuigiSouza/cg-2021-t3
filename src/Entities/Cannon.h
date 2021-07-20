@@ -2,7 +2,7 @@
 #define __CANNON_H__
 
 #include "Dart.h"
-#include "CannonState.h"
+#include "EnumCannonState.h"
 
 class Cannon
 {
@@ -27,7 +27,7 @@ public:
     Vector2 getDartPos(void);
     Vector2 *getDartArrow(void);
 
-    void render(void);
+    void render(bool show_path);
     void update(Mouse mouse);
 
     Cannon(float _x, float _y);

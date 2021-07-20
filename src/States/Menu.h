@@ -15,6 +15,8 @@ public:
     void update(Mouse mouse);
     void render(void);
 
+    EnumBotao getDifficult(void);
+
     Menu(float x, float y, float width, float height);
     ~Menu();
 };
