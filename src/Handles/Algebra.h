@@ -1,5 +1,5 @@
-#ifndef __Algebra_H__
-#define __Algebra_H__
+#ifndef __ALGEBRA_H__
+#define __ALGEBRA_H__
 
 #include <cmath>
 #include <iostream>
