@@ -27,6 +27,7 @@ public:
     Vector2 getDartPos(void);
     Vector2 *getDartArrow(void);
 
+    void render_force(void);
     void render(bool show_path);
     void update(Mouse mouse);
 

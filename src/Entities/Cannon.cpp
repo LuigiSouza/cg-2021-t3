@@ -50,6 +50,25 @@ void Cannon::update(Mouse mouse)
         dart.update_dart();
 }
 
+void Cannon::render_force(void)
+{
+    Vector2 force = (direction[1] + direction[2]) / 2.0;
+    float dist = Algebra::distance(force.x, force.y, direction[0].x, direction[0].y);
+    force = (force - direction[0]) * -1;
+    force = (force / dist) * dart.getForce();
+
+    Vector2 arm1 = Algebra::rotate(force.x, force.y, PI_div_2);
+    Vector2 arm2 = Algebra::rotate(force.x, force.y, -PI_div_2);
+    force = force + direction[0];
+    arm1.normalize();
+    arm2.normalize();
+    arm1 = arm1 * this->size + force;
+    arm2 = arm2 * this->size + force;
+
+    CV::line(force.x, force.y, direction[0].x, direction[0].y);
+    CV::line(arm1.x, arm1.y, arm2.x, arm2.y);
+}
+
 void Cannon::render(bool show_path)
 {
     CV::color(1, 1, 1);
@@ -60,7 +79,6 @@ void Cannon::render(bool show_path)
 
     CV::color(r, g, b);
     CV::circleFill(pos.x, pos.y, size, 10);
-
     float cannon_x[3] = {
         direction[0].x,
         direction[1].x,
@@ -70,6 +88,9 @@ void Cannon::render(bool show_path)
         direction[1].y,
         direction[2].y};
     CV::polygonFill(cannon_x, cannon_y, 3);
+
+    if (state == CannonState::Drag)
+        render_force();
 
     CV::color(0, 0, 0);
 }
