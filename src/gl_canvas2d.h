@@ -13,18 +13,6 @@
 #define PI_2 6.28318530717
 #define PI 3.14159265359
 
-// Button functions
-#define QUADRADO  1
-#define TRIANGULO 2
-#define CIRCULO   3
-#define POLIGONO  4
-#define ELEVAR    5
-#define ABAIXAR   6
-#define SALVAR    7
-#define DELETAR   8 
-#define PREENCHER 9
-#define COR       10
-
 #define BIG_CIRCLE_DIV 30
 #define SML_CIRCLE_DIV 10
 #define RADIUS_BALL 5
