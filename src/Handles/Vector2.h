@@ -81,6 +81,12 @@ public:
         return (aux);
     }
 
+    Vector2 operator/(const double div)
+    {
+        Vector2 aux(x / div, y / div);
+        return (aux);
+    }
+
     //Adicionem os demais overloads de operadores aqui.
 };
 
