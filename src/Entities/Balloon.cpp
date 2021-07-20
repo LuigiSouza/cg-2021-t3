@@ -62,4 +62,4 @@ float Balloon::getSize(void)
     return size;
 }
 
-float Balloon::size = 15.0;
+float Balloon::size = 22.5;
