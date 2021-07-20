@@ -37,21 +37,14 @@
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <list>
 #include <iostream>
-#include <fstream>
 #include <map>
 
 #include "gl_canvas2d.h"
 
-#include "Entities/Cannon.h"
-#include "Entities/Balloon.h"
-
 #include "Handles/HandleMouse.h"
-#include "Handles/Algebra.h"
 
 #include "States/Game.h"
 #include "States/Menu.h"
@@ -61,23 +54,6 @@ int screenWidth = 1024, screenHeight = 768;
 Mouse *mouse_state;
 std::map<std::string, GameState *> state;
 std::string current_state = "Menu";
-
-// Variable to keep chosen figure when clicking a panel option
-bool click = false;
-
-/***********************************************************
-*
-* Render Functions
-*
-************************************************************/
-
-void render_figures()
-{
-}
-
-void high_light()
-{
-}
 
 /***********************************************************
 *
@@ -99,6 +75,12 @@ void dispose()
 void update()
 {
    state[current_state]->update(*mouse_state);
+   if (state[current_state]->get_changeState())
+   {
+      EnumBotao difficult = state["Menu"]->getDifficult();
+      current_state = "Game";
+      state[current_state]->setDifficult(difficult);
+   }
    mouse_state->update();
 }
 
@@ -125,10 +107,6 @@ void keyboard(int key)
    bool fecha = true;
    switch (key)
    {
-   case 13: // enter: forces a polygon to finish before clicking in first vertice
-      break;
-   case 19: // ctrl + s
-      break;
    case 27: // finaliza programa após clicar duas vezes
       if (fecha)
       {
@@ -136,29 +114,12 @@ void keyboard(int key)
          exit(0);
       }
       break;
-   case 43: // +
-      break;
-   case 45: // -
-      break;
-   case 102: // f
-      break;
-   case 127: // del
-      break;
-   case 214:
-      mouse_state->setCtrl(true);
-      break;
    }
 }
+
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
-   // printf("\nLiberou tecla: %d", key);
-   switch (key)
-   {
-   case 214:
-      mouse_state->setCtrl(false);
-      break;
-   }
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -171,19 +132,6 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
    if (state != -2)
       mouse_state->setPress(button);
-
-   // Left click
-   if (button == 0)
-   {
-      // Release
-      if (state == 1)
-      {
-      }
-      // Push
-      else if (state == 0)
-      {
-      }
-   }
 }
 
 int main(void)
@@ -192,7 +140,7 @@ int main(void)
 
    mouse_state = new Mouse();
    state["Game"] = new Game(&screenWidth, &screenHeight);
-   state["Menu"] = new Menu(screenWidth / 4, 100, screenWidth / 2, 600);
+   state["Menu"] = new Menu(screenWidth / 3, 200, screenWidth / 4, 400);
 
    CV::run();
 }
