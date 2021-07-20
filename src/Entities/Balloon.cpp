@@ -31,7 +31,7 @@ void Balloon::set_color(float _r, float _g, float _b)
 
 void Balloon::set_color(int index)
 {
-    float *rgb = CV::get_color(index);
+    float *rgb = this->balloon_color[index];
     this->r = rgb[0];
     this->g = rgb[1];
     this->b = rgb[2];
@@ -40,8 +40,7 @@ void Balloon::set_color(int index)
 void Balloon::set_random_color(double seed)
 {
     srand(seed);
-    int r = rand() % 16;
-    r = r == 0 ? r + 1 : r; // não pegar a cor preta
+    int r = rand() % 11;
     this->set_color(r);
 }
 

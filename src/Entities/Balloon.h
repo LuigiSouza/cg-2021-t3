@@ -7,6 +7,21 @@
 class Balloon
 {
 private:
+    float balloon_color[11][3] =
+        {
+            {1, 0, 0},       //Red
+            {0, 1, 0},       //Green
+            {0, 0, 1},       //Blue
+            {1, 0.5, 0},     //Orange
+            {0.5, 0, 0},     //Brown
+            {0.5, 0.5, 0},   //Olive
+            {0, 0.5, 0.5},   //
+            {0.5, 0, 0.5},   //
+            {0, 1, 1},       //Cyan
+            {1, 0, 1},       //Magenta
+            {1, 1, 0},       //Yellow
+    };
+
     Vector2 pos;
 
     static float size;
