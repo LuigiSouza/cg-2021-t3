@@ -61,6 +61,10 @@
 		<Unit filename="src/Panel/Botao.h" />
 		<Unit filename="src/Panel/Panel.cpp" />
 		<Unit filename="src/Panel/Panel.h" />
+		<Unit filename="src/States/Game.cpp" />
+		<Unit filename="src/States/Game.h" />
+		<Unit filename="src/States/GameState.h" />
+		<Unit filename="src/States/Menu.cpp" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />

@@ -53,7 +53,7 @@ int screenWidth = 1024, screenHeight = 768;
 
 Mouse *mouse_state;
 std::map<std::string, GameState *> state;
-std::string current_state = "Menu";
+std::string current_state;
 
 /***********************************************************
 *
@@ -141,6 +141,7 @@ int main(void)
    mouse_state = new Mouse();
    state["Game"] = new Game(&screenWidth, &screenHeight);
    state["Menu"] = new Menu(screenWidth / 3, 200, screenWidth / 4, 400);
+   current_state = "Menu";
 
    CV::run();
 }
