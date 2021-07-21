@@ -22,7 +22,7 @@ private:
     /* data */
 public:
     void dragCannon(Mouse mouse);
-    void shotDart(void);
+    bool shotDart(void);
 
     Vector2 getDartPos(void);
     Vector2 *getDartArrow(void);

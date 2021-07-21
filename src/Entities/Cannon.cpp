@@ -105,17 +105,18 @@ Vector2 *Cannon::getDartArrow(void)
     return dart.getArrow();
 }
 
-void Cannon::shotDart(void)
+bool Cannon::shotDart(void)
 {
     if (state != CannonState::Drag)
-        return;
+        return false;
     if (this->dart.getForce() < this->minimum_force)
     {
         state = CannonState::Stop;
-        return;
+        return false;
     }
     dart.reset_dart();
     state = CannonState::Shoot;
+    return true;
 }
 
 void Cannon::dragCannon(Mouse mouse)

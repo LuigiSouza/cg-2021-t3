@@ -1,15 +1,16 @@
 #include "Balloon.h"
 
-void Balloon::update(Vector2 *dart)
+bool Balloon::update(Vector2 *dart)
 {
     for (int i = 0; i < 3; i++)
     {
         if (!was_pop && Algebra::distance(dart[i].x, dart[i].y, pos.x, pos.y) <= this->size)
         {
             was_pop = true;
-            return;
+            return true;
         }
     }
+    return false;
 }
 
 void Balloon::render(void)

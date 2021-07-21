@@ -39,7 +39,7 @@ public:
 
     static float getSize(void);
 
-    void update(Vector2 *dart);
+    bool update(Vector2 *dart);
     void render(void);
 };
 
