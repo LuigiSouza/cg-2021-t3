@@ -20,11 +20,12 @@ protected:
     EnumBotao difficult;
 
 public:
+    virtual ~GameState() {}
+
     static int total_darts;
 
     virtual void render(void) = 0;
     virtual void update(Mouse mouse) = 0;
-    virtual void dispose(void) = 0;
 
     virtual void reset(EnumBotao difficult)
     {

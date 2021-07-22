@@ -34,10 +34,6 @@ void GameOver::update(Mouse mouse)
     }
 }
 
-void GameOver::dispose(void)
-{
-}
-
 GameOver::GameOver(float x, float y, float width, float height)
 {
     this->change_state = this->name_state = "GameOver";
@@ -52,4 +48,5 @@ GameOver::GameOver(float x, float y, float width, float height)
 
 GameOver::~GameOver()
 {
+    delete panel;
 }

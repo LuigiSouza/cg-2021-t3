@@ -48,18 +48,6 @@ void Game::update(Mouse mouse)
         this->change_state = "GameOver";
 }
 
-void Game::dispose(void)
-{
-    delete cannon;
-    for (auto it = balloons.begin(); it != balloons.end(); ++it)
-    {
-        Balloon *aux = *it;
-        balloons.erase(it);
-        delete aux;
-    }
-    balloons.clear();
-}
-
 void Game::reset(EnumBotao difficult)
 {
     GameState::reset(difficult);
@@ -95,4 +83,12 @@ Game::Game(int *_screenWidth, int *_screenHeight)
 
 Game::~Game()
 {
+    delete cannon;
+    for (auto it = balloons.begin(); it != balloons.end(); ++it)
+    {
+        Balloon *aux = *it;
+        balloons.erase(it);
+        delete aux;
+    }
+    balloons.clear();
 }

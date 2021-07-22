@@ -12,6 +12,10 @@ Mouse::Mouse(void)
    this->prev_pos_y = this->pos_y = 0;
 }
 
+Mouse::~Mouse(void)
+{
+}
+
 void Mouse::update(void)
 {
    for (int i = 0; i < 3; i++)

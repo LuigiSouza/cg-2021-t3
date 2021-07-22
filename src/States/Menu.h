@@ -11,7 +11,6 @@ private:
     Panel *panel;
 
 public:
-    void dispose(void);
     void update(Mouse mouse);
     void render(void);
 

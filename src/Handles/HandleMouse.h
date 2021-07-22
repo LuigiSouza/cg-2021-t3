@@ -18,6 +18,7 @@ private:
 
 public:
     Mouse(void);
+    ~Mouse(void);
 
     // get states
     bool isDown(int index);

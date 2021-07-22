@@ -137,6 +137,7 @@ Dart::Dart(float _x, float _y)
 
 Dart::~Dart()
 {
+    delete arrow;
 }
 
 float Dart::max_force = 150.0;

@@ -11,6 +11,10 @@ Botao::Botao(float _x, float _y, float _larg, float _alt, EnumBotao function, in
    set_function(function);
 }
 
+Botao::~Botao()
+{
+}
+
 void Botao::render()
 {
    CV::color(r, g, b);

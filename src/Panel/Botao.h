@@ -24,6 +24,7 @@ private:
 
 public:
   Botao(float _x, float _y, float _larg, float _alt, EnumBotao function, int rgb);
+  ~Botao();
 
   void render();
 

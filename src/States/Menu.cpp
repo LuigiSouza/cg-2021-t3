@@ -34,10 +34,6 @@ void Menu::update(Mouse mouse)
     }
 }
 
-void Menu::dispose(void)
-{
-}
-
 Menu::Menu(float x, float y, float width, float height)
 {
     this->change_state = this->name_state = "Menu";
@@ -54,4 +50,5 @@ Menu::Menu(float x, float y, float width, float height)
 
 Menu::~Menu()
 {
+    delete panel;
 }

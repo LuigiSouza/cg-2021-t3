@@ -67,6 +67,10 @@ std::string current_state;
 void dispose()
 {
    delete mouse_state;
+   delete state["Game"];
+   delete state["Menu"];
+   delete state["GameOver"];
+   state.clear();
    exit(0);
 }
 

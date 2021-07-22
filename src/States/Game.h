@@ -31,7 +31,6 @@ private:
     void render_background(void);
 
 public:
-    void dispose(void);
     void update(Mouse mouse);
     void render(void);
 

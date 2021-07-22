@@ -11,6 +11,12 @@ Panel::Panel(float x, float y, float width, float height)
 
 Panel::~Panel()
 {
+   for (auto it = buttons.begin(); it != buttons.end(); ++it)
+   {
+      Botao *aux = *it;
+      buttons.erase(it);
+      delete aux;
+   }
    buttons.clear();
 }
 
