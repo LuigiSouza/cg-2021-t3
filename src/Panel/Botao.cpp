@@ -44,6 +44,14 @@ void Botao::set_function(EnumBotao function)
       sprintf(label, "Dificil");
       this->function = function;
       break;
+   case EnumBotao::Menu:
+      sprintf(label, "Menu");
+      this->function = function;
+      break;
+   case EnumBotao::Sair:
+      sprintf(label, "Sair");
+      this->function = function;
+      break;
    default:
       std::cout << std::endl
                 << "Opcao Invalida..." << std::endl;

@@ -2,5 +2,7 @@ enum class EnumBotao
 {
     Jogar,
     Facil,
-    Dificil
+    Dificil,
+    Menu,
+    Sair
 };

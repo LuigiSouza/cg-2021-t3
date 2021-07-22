@@ -43,6 +43,9 @@ void Game::update(Mouse mouse)
         bool pop = (*it)->update(cannon->getDartArrow());
         this->poped_balloons = pop ? this->poped_balloons + 1 : this->poped_balloons;
     }
+
+    if (cannon->getState() == CannonState::Stop && (this->used_darts == this->total_darts || this->poped_balloons == this->total_balloons))
+        this->change_state = "GameOver";
 }
 
 void Game::dispose(void)
@@ -57,15 +60,24 @@ void Game::dispose(void)
     balloons.clear();
 }
 
+void Game::reset(EnumBotao difficult)
+{
+    GameState::reset(difficult);
+    cannon->reset();
+    for (auto it = balloons.begin(); it != balloons.end(); ++it)
+        (*it)->reset();
+    poped_balloons = 0;
+    used_darts = 0;
+}
+
 Game::Game(int *_screenWidth, int *_screenHeight)
 {
     this->screenWidth = _screenWidth;
     this->screenHeight = _screenHeight;
 
-    this->change_state = false;
+    this->change_state = this->name_state = "Game";
 
     this->poped_balloons = this->used_darts = 0;
-    this->total_darts = 5;
 
     this->cannon = new Cannon(200, 350);
     for (int i = 0; i < 10; i++)
