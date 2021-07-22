@@ -14,8 +14,6 @@ private:
     std::list<Balloon *> balloons;
 
     int *screenWidth, *screenHeight;
-    int total_balloons, poped_balloons;
-    int total_darts, used_darts;
 
     bool balloons_grid[10][10] = {
         {0, 0, 0, 1, 1, 1, 1, 0, 0, 0},
@@ -36,6 +34,8 @@ public:
     void dispose(void);
     void update(Mouse mouse);
     void render(void);
+
+    void reset(EnumBotao difficult);
 
     Game(int *_screenWidth, int *_screenHeight);
     ~Game();
