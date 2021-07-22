@@ -48,8 +48,11 @@
 
 #include "States/Game.h"
 #include "States/Menu.h"
+#include "States/GameOver.h"
 
 int screenWidth = 1024, screenHeight = 768;
+
+int GameState::total_darts = 5;
 
 Mouse *mouse_state;
 std::map<std::string, GameState *> state;
@@ -64,6 +67,7 @@ std::string current_state;
 void dispose()
 {
    delete mouse_state;
+   exit(0);
 }
 
 /***********************************************************
@@ -75,11 +79,18 @@ void dispose()
 void update()
 {
    state[current_state]->update(*mouse_state);
-   if (state[current_state]->get_changeState())
+   if (state[current_state]->get_changeState() != current_state)
    {
-      EnumBotao difficult = state["Menu"]->getDifficult();
-      current_state = "Game";
-      state[current_state]->setDifficult(difficult);
+      EnumBotao difficult = state[current_state]->getDifficult();
+      std::list<int> points = state[current_state]->getPoints();
+
+      current_state = state[current_state]->get_changeState();
+      if (!state[current_state])
+         dispose();
+      if (current_state == "GameOver")
+         state[current_state]->setPoints(points);
+
+      state[current_state]->reset(difficult);
    }
    mouse_state->update();
 }
@@ -111,7 +122,6 @@ void keyboard(int key)
       if (fecha)
       {
          dispose();
-         exit(0);
       }
       break;
    }
@@ -141,6 +151,7 @@ int main(void)
    mouse_state = new Mouse();
    state["Game"] = new Game(&screenWidth, &screenHeight);
    state["Menu"] = new Menu(screenWidth / 3, 200, screenWidth / 4, 400);
+   state["GameOver"] = new GameOver(screenWidth / 3, 200, screenWidth / 4 + 20, 400);
    current_state = "Menu";
 
    CV::run();
