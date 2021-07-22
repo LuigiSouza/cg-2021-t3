@@ -19,7 +19,7 @@ void Balloon::render(void)
         return;
 
     CV::color(this->r, this->g, this->b);
-    CV::circleFill(pos.x, pos.y, this->size, 10);
+    CV::circleFill(pos.x, pos.y, this->size, BIG_CIRCLE_DIV);
     CV::color(0, 0, 0);
 }
 
@@ -52,6 +52,11 @@ Balloon::Balloon(float _x, float _y)
     this->r = 1.0;
     this->g = 0.0;
     this->b = 1.0;
+}
+
+void Balloon::reset()
+{
+    was_pop = false;
 }
 
 Balloon::~Balloon()

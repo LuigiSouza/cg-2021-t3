@@ -35,7 +35,7 @@ void Dart::reset_dart(void)
     pos = p0;
 }
 
-void Dart::update_points(Mouse mouse)
+void Dart::updatePoints(Mouse mouse)
 {
     p1 = getPointP1(mouse);
     p2 = getPointP2();
@@ -72,9 +72,9 @@ void Dart::update_dart(void)
 
 void Dart::render_reference(void)
 {
-    CV::circleFill(p0.x, p0.y, 2, 10);
-    CV::circleFill(p1.x, p1.y, 2, 10);
-    CV::circleFill(p2.x, p2.y, 2, 10);
+    CV::circleFill(p0.x, p0.y, 2, SML_CIRCLE_DIV);
+    CV::circleFill(p1.x, p1.y, 2, SML_CIRCLE_DIV);
+    CV::circleFill(p2.x, p2.y, 2, SML_CIRCLE_DIV);
 }
 
 void Dart::render_path(void)
@@ -82,7 +82,7 @@ void Dart::render_path(void)
     for (double i = 0; i <= 1; i += 0.1)
     {
         Vector2 q0 = Algebra::quadratic_bezier(p0, p1, p2, i);
-        CV::circleFill(q0.x, q0.y, 5, 10);
+        CV::circleFill(q0.x, q0.y, 5, SML_CIRCLE_DIV);
     }
     pos = Algebra::quadratic_bezier(p0, p1, p2, t);
 }

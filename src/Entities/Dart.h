@@ -36,7 +36,7 @@ public:
 
     void reset_dart(void);
 
-    void update_points(Mouse mouse);
+    void updatePoints(Mouse mouse);
     void update_dart(void);
 
     void render_reference(void);
