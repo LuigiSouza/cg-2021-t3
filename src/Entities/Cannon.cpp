@@ -43,11 +43,19 @@ void Cannon::update(Mouse mouse)
     }
     if (state == CannonState::Drag)
     {
-        dart.update_points(mouse);
+        dart.updatePoints(mouse);
         updateCannon(mouse);
     }
     if (state == CannonState::Shoot)
         dart.update_dart();
+}
+
+void Cannon::reset(void)
+{
+    this->direction[0] = pos;
+    this->direction[1].set(pos.x - minimum_force / 2.0, pos.y + minimum_force);
+    this->direction[2].set(pos.x + minimum_force / 2.0, pos.y + minimum_force);
+    this->state = CannonState::Stop;
 }
 
 void Cannon::render_force(void)
@@ -78,7 +86,7 @@ void Cannon::render(bool show_path)
         dart.render_dart();
 
     CV::color(r, g, b);
-    CV::circleFill(pos.x, pos.y, size, 10);
+    CV::circleFill(pos.x, pos.y, size, SML_CIRCLE_DIV);
     float cannon_x[3] = {
         direction[0].x,
         direction[1].x,
@@ -93,6 +101,11 @@ void Cannon::render(bool show_path)
         render_force();
 
     CV::color(0, 0, 0);
+}
+
+CannonState Cannon::getState(void)
+{
+    return this->state;
 }
 
 Vector2 Cannon::getDartPos(void)

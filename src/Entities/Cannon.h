@@ -24,9 +24,13 @@ public:
     void dragCannon(Mouse mouse);
     bool shotDart(void);
 
+    CannonState getState(void);
+
     Vector2 getDartPos(void);
     Vector2 *getDartArrow(void);
 
+    void reset(void);
+    
     void render_force(void);
     void render(bool show_path);
     void update(Mouse mouse);
