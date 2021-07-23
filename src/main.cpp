@@ -13,25 +13,25 @@
 //
 // *********************************************************************/
 
+// Luigi Perotti Souza - 201910462
+
 /***********************************************************************
  *
  * Funções básicas implementadas:
  *
-- Inserir/excluir figura.
-- Cor da figura.
-- Preenchimento da figura.
-- Editar tamanho da figura.
-- Editar orientação da figura.
-- Enviar para frente/traz.
-- Salvar em arquivo e carregar de arquivo.
+- Classes em C++ para definição de vetores e transformações geométricas
+- Sistema do controle do canhão
+- Sistema de movimentação do projétil. De preferência utilize o mouse para isso.
+- Colisão do projétil com os alvos (círculos)
+- Controle da direção do canhão
+- Controle da força de disparo
 
 /------------------------------------------------------------------------
  *
  * Funções extras implementadas:
  *
-- Sinalizar qual figura está selecionada.
-- Rotacionar figura em qualquer ângulo.
-- Permitir inserir polígonos quaisquer.
+- Sistemas de GameStates
+
 ************************************************************************/
 
 #include <GL/glut.h>
@@ -52,10 +52,12 @@
 
 int screenWidth = 1024, screenHeight = 768;
 
-int GameState::total_darts = 5;
+int GameState::total_darts = 6;
 
 Mouse *mouse_state;
-std::map<std::string, GameState *> state;
+
+// Game State Manager
+std::map<std::string, GameState *> gsm;
 std::string current_state;
 
 /***********************************************************
@@ -67,10 +69,10 @@ std::string current_state;
 void dispose()
 {
    delete mouse_state;
-   delete state["Game"];
-   delete state["Menu"];
-   delete state["GameOver"];
-   state.clear();
+   delete gsm["Game"];
+   delete gsm["Menu"];
+   delete gsm["GameOver"];
+   gsm.clear();
    exit(0);
 }
 
@@ -82,19 +84,19 @@ void dispose()
 
 void update()
 {
-   state[current_state]->update(*mouse_state);
-   if (state[current_state]->get_changeState() != current_state)
+   gsm[current_state]->update(*mouse_state);
+   if (gsm[current_state]->get_changeState() != current_state)
    {
-      EnumBotao difficult = state[current_state]->getDifficult();
-      std::list<int> points = state[current_state]->getPoints();
+      EnumBotao difficult = gsm[current_state]->getDifficult();
+      std::list<int> points = gsm[current_state]->getPoints();
 
-      current_state = state[current_state]->get_changeState();
-      if (!state[current_state])
+      current_state = gsm[current_state]->get_changeState();
+      if (!gsm[current_state])
          dispose();
       if (current_state == "GameOver")
-         state[current_state]->setPoints(points);
+         gsm[current_state]->setPoints(points);
 
-      state[current_state]->reset(difficult);
+      gsm[current_state]->reset(difficult);
    }
    mouse_state->update();
 }
@@ -111,7 +113,7 @@ void render()
 {
    CV::clear(0, 0, 0);
 
-   state[current_state]->render();
+   gsm[current_state]->render();
 
    update();
 }
@@ -153,9 +155,9 @@ int main(void)
    CV::init(&screenWidth, &screenHeight, "More Bloons");
 
    mouse_state = new Mouse();
-   state["Game"] = new Game(&screenWidth, &screenHeight);
-   state["Menu"] = new Menu(screenWidth / 3, 200, screenWidth / 4, 400);
-   state["GameOver"] = new GameOver(screenWidth / 3, 200, screenWidth / 4 + 20, 400);
+   gsm["Game"] = new Game(&screenWidth, &screenHeight);
+   gsm["Menu"] = new Menu(screenWidth / 3, 200, screenWidth / 4, 400);
+   gsm["GameOver"] = new GameOver(screenWidth / 3, 200, screenWidth / 4 + 20, 400);
    current_state = "Menu";
 
    CV::run();

@@ -19,7 +19,6 @@ private:
     static float minimum_force;
 
     void updateCannon(Mouse mouse);
-    /* data */
 public:
     void dragCannon(Mouse mouse);
     bool shotDart(void);

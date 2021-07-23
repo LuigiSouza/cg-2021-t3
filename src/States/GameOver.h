@@ -3,6 +3,13 @@
 
 #include "GameState.h"
 
+/**
+ * - GameOver
+ * 
+ *  Shows gameOver screen to quit game or back to Menu
+*/
+
+
 #include "../Panel/Panel.h"
 
 class GameOver : public GameState

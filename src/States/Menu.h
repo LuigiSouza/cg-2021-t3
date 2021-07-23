@@ -3,6 +3,12 @@
 
 #include "GameState.h"
 
+/**
+ * - Menu
+ * 
+ * Main Menu, can start game, set difficult and quit canvas
+*/
+
 #include "../Panel/Panel.h"
 
 class Menu : public GameState

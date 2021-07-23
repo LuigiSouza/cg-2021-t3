@@ -3,6 +3,12 @@
 
 #include "GameState.h"
 
+/**
+ * - Game
+ * 
+ * Main class, responsible to render cannon, balloons, dart and show points
+*/
+
 #include "../Entities/Cannon.h"
 #include "../Entities/Balloon.h"
 #include <list>
